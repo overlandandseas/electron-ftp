@@ -1,26 +1,44 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="UTF-8">
     <title>FTP Application</title>
     <link href="css/stylesheet.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css" rel="stylesheet">
-  </head>
-  <body>
-      <h1>Electron FTP Application</h1>
-      <div class="left-box">
-          <h3>This is the left side.</h3>
-          <button id="populate-box">Populate Box</button>
-          <div id="right-side-file-list">
+</head>
+<body>
+    <h3>FTP app</h3>
+    <div class="inputs">
+        <form id="remote-login" onsubmit="login()">
+            <input name="host" placeholder="host (localhost)" >
+            <input name="user" placeholder="user (anonymous)" >
+            <input name="password" placeholder="password (anonymous@)" type="password">
+            <input name="port" placeholder="port (21)" >
+            <submit id="login">login</submit>
+        </form>
+    </div>
+    <h3>for cars.com</h3>
+    <div class="left-box">
+        <h3>Local</h3>
+        <div>
+            <select multiple id="left-side-file-list">
 
-          </div>
-      </div>
-      <div class="right-box">
-          <h3>This is the right side.</h3>
-      </div>
-  </body>
+            </select>
+        </div>
+    </div>
+    <div class="right-box">
+        <h3>Remote</h3>
 
-  <script>
-    require('./renderer.js')
-  </script>
+        <div>
+            <select multiple id="right-side-file-list">
+
+            </select>
+        </div>
+    </div>
+</body>
+
+<script>
+// run the scripts !
+require('./renderer.js')
+</script>
 </html>

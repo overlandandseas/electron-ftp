@@ -1,0 +1,22 @@
+/*
+STYLESHEETS
+*/
+body {
+    background-color: #ccc;
+    text-align: center;
+}
+
+.left-box {
+    float: left;
+    padding: 10px 0;
+    background-color: #fcc;
+    width: calc(50% - 16px);
+    margin-left: 8px;
+}
+.right-box {
+    float: left;
+    padding: 10px 0;
+    background-color: #cfc;
+    width: calc(50% - 16px);
+    margin-left: 16px;
+}

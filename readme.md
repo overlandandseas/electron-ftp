@@ -4,5 +4,5 @@ Demo application made for Cars.com tech tailgate.
 
 ### Run
 ```
-electron .
+npm start
 ```

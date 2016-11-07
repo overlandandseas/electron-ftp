@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>FTP Application</title>
+    <link href="css/stylesheet.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css" rel="stylesheet">
+  </head>
+  <body>
+      <h1>Electron FTP Application</h1>
+      <div class="left-box">
+          <h3>This is the left side.</h3>
+          <button id="open-local-file-manager">Select Directory</button>
+          <div id="right-side-file-list">
+
+          </div>
+      </div>
+      <div class="right-box">
+          <h3>This is the right side.</h3>
+      </div>
+  </body>
+
+  <script>
+    require('./renderer.js')
+  </script>
+</html>

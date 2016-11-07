@@ -4,8 +4,15 @@
   "description": "FTP demo app built in electron.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron src/"
   },
   "author": "Lucas Overland",
-  "license": "WTFPL"
+  "license": "WTFPL",
+  "devDependencies": {
+    "electron": "^1.4.1"
+  },
+  "dependencies": {
+    "normalize": "^0.3.1"
+  }
 }

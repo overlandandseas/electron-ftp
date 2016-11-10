@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron src/"
+    "start": "electron app/",
+    "build": "rm -rf ./dist/WhatsApp-darwin-x64 && electron-packager ./app \"electronftp\" --out=dist --platform=darwin --arch=x64 --version=1.4.1"
   },
   "author": "Lucas Overland",
   "license": "WTFPL",
   "devDependencies": {
-    "electron": "^1.4.1"
+    "electron": "^1.4.1",
+    "electron-packager": "^8.2.0"
   },
   "dependencies": {
     "normalize": "^0.3.1"

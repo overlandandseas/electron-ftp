@@ -5,8 +5,11 @@ const      Ftp = require('ftp')
 const     path = require('path')
 const Electron = require('electron')
 
-const FileItem = require('./lib/FileItem')
-// const FolderItem = require('./lib/FolderItem')
+const FileItem = require('./lib/client/FileItem')
+const FolderItem = require('./lib/client/FolderItem')
+
+const RemoteFileItem = require('./lib/remote/RemoteFileItem')
+const RemoteFolderItem = require('./lib/remote/RemoteFolderItem')
 
 const shell = Electron.shell
 
@@ -14,7 +17,8 @@ const leftBox = document.getElementById('left-side-file-list')
 const rightBox = document.getElementById('right-side-file-list')
 
 
-window.login = () => {
+window.login = e => {
+    e.preventDefault()
     let formData = new FormData(document.querySelector('form'))
     c.connect({
         host: formData.get('host'),
@@ -27,96 +31,56 @@ window.login = () => {
 document.getElementById('login').addEventListener('click', window.login)
 
 
-populateBox(leftBox, __dirname)
+FolderItem.populateBox(leftBox, __dirname)
 
-// populateBox(rightBox, os.homedir())
+
 window.c = new Ftp()
 c.on('ready', function () {
-    c.list((err, list) => {
-        console.dir(list)
-        list.forEach(file => {
-            if (file.type === '-') {
-                rightBox.appendChild(FileItem.toElement(file.name, { stat: file }))
-            } else {
-                console.log('probs a directory', file.name)
-            }
+    RemoteFolderItem.populateBox(rightBox, '~')
+})
+
+
+// put link
+document.getElementById('put-link').addEventListener('click', e => {
+
+    e.preventDefault()
+
+    let selectedToNames = Array.prototype.filter
+        .call(leftBox.querySelectorAll('option'), i => i.selected)
+        .map(i => i.innerHTML)
+
+    let paths = FolderItem.arr
+        .filter(file => selectedToNames.includes(file.name))
+        .map(file => new Promise(res => c.put(file.absolutePath, file.name, err => res())))
+
+    c.pwd((err, pwd) => {
+        Promise.all(paths).then(() => {
+            RemoteFolderItem.populateBox(rightBox, pwd)
         })
-        c.end()
     })
 })
 
 
+// get link
+document.getElementById('get-link').addEventListener('click', e => {
 
-function populateBox(boxElm, dir) {
+    e.preventDefault()
 
-    boxElm.innerHTML = ""
+    let pwd = path.dirname(FolderItem.arr[0].absolutePath)
 
-    fs.readdir(dir, (err, files) => {
+    let selectedToNames = Array.prototype.filter
+        .call(rightBox.querySelectorAll('option'), i => i.selected)
+        .map(i => i.innerHTML)
 
-        let notDirs = []
-
-        let upDir = document.createElement('option')
-        upDir.innerHTML = '../'
-        upDir.addEventListener('dblclick', function () {
-            populateBox(boxElm, path.dirname(dir))
-        })
-
-        boxElm.appendChild(upDir)
-
-        files.forEach(value => {
-
-                let status = fs.statSync(path.join(dir, value))
-
-                if (status.isDirectory())
-                    mkFileElmAppender(boxElm, path.join(dir, value), status)()
-
-                else if (status.isFile())
-                    notDirs.push(mkFileElmAppender(boxElm, path.join(dir, value), status))
-
-        })
-        notDirs.forEach(func => func())
-    })
-}
+    let paths = RemoteFolderItem.arr
+        .filter(file => selectedToNames.includes(file.name))
+        .map(file => new Promise(res => c.get(file.name, (err, stream) => {
+            stream.once('close', res)
+            stream.pipe(fs.createWriteStream(path.join(pwd, file.name)))
+        })))
 
 
 
-function mkFileElmAppender(elm, filePath, status) {
+    Promise.all(paths).then(() => FolderItem.populateBox(leftBox, pwd))
 
-    if (status.isDirectory())
-        return () => elm.appendChild(new FolderItem(filePath, status).toElement())
-
-    else if (status.isFile())
-        return () => elm.appendChild(FileItem.toElement(filePath, status))
-
-    else
-        console.log(filePath, 'not a file.');
-}
-
-
-//for now
-
-function FolderItem (inPath, stat) {
-
-    this.stat = stat || fs.statSync(inPath)
-    this.name = path.basename(inPath)
-    this.extension = path.extname(inPath)
-    this.absolutePath = path.resolve(inPath)
-
-}
-
-FolderItem.prototype.toElement = function (boxElm) {
-    let elm = document.createElement('option')
-    elm.innerHTML = `Directory: ${this.name}/`
-    elm.addEventListener('dblclick', () => {
-        this.cdDirectory(boxElm);
-    })
-    return elm
-}
-
-FolderItem.prototype.cdDirectory = function (boxElm) {
-    let elm = document.createElement('select')
-    populateBox(leftBox, this.absolutePath)
-
-}
-
-FolderItem.toElement = (inPath, stat) => FolderItem.prototype.toElement.call({ name: path.basename(inPath), stat })
+})

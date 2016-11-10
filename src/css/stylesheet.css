@@ -14,13 +14,41 @@ select {
     float: left;
     padding: 10px 0;
     background-color: #fcc;
-    width: calc(50% - 16px);
+    width: calc(40% - 16px);
     margin-left: 8px;
 }
 .right-box {
     float: left;
     padding: 10px 0;
     background-color: #cfc;
-    width: calc(50% - 16px);
+    width: calc(40% - 16px);
     margin-left: 16px;
+}
+
+
+.middle-box {
+    float: left;
+    margin-left: 8px;
+    width: calc(20% - 8px);
+}
+
+.put-box {
+    padding: 10px;
+    margin-bottom: 16px;
+    background-color: #fff;
+}
+.get-box {
+    padding: 10px;
+    background-color: #fff;
+}
+
+a {
+    text-decoration: underline;
+    color: #666;
+}
+a:visited {
+    color:#66;
+}
+a:hover {
+    color: #000;
 }

@@ -2,8 +2,8 @@
   "name": "electron-ftp",
   "version": "0.0.1",
   "description": "FTP demo app built in electron.",
+  "main": "./app/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron ./app/main.js",
     "build": "electron-packager ./ \"electronftp\" --platform=darwin --arch=x64 --version=1.4.1 --overwrite"
   },

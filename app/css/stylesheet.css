@@ -2,44 +2,84 @@
 STYLESHEETS
 */
 body {
-    background-color: #ccc;
+    background-color: #333;
     text-align: center;
+    color: #fff;
 }
 
 select {
     height: 360px;
+    width: 278px;
+    background-color: #333;
+    color: #fff;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    border-left: 3px solid #fff;
+    padding: 5px;
+}
+input {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid 1px #000;
+    background-color: #333;
+    color: #fff;
+    width: 150px !important;
+    font-size: .8em !important;
 }
 
+*:focus {
+    outline:none;
+    color: #fff;
+}
 .left-box {
     float: left;
     padding: 10px 0;
-    background-color: #fcc;
+    /*background-color: #fcc;*/
     width: calc(40% - 16px);
     margin-left: 8px;
 }
 .right-box {
     float: left;
     padding: 10px 0;
-    background-color: #cfc;
+    /*background-color: #cfc;*/
     width: calc(40% - 16px);
     margin-left: 16px;
 }
+
 
 
 .middle-box {
     float: left;
     margin-left: 8px;
     width: calc(20% - 8px);
+    padding-top: 75px;
 }
+.middle-box div {
 
+    color: #fff;
+    border-radius: 50%;
+    height: 125px;
+    width: 125px;
+    line-height: 103px;
+}
+.middle-box div a {
+
+    color: #999;
+}
+.middle-box div a:hover {
+
+    color: #fff;
+}
 .put-box {
     padding: 10px;
     margin-bottom: 16px;
-    background-color: #fff;
+
 }
 .get-box {
     padding: 10px;
-    background-color: #fff;
+
 }
 
 a {
@@ -50,5 +90,18 @@ a:visited {
     color:#66;
 }
 a:hover {
-    color: #000;
+    color: #fff;
+}
+
+button {
+    cursor: pointer;
+    background-color: #95a5a6;
+    border-radius: 50%;
+    height: 75px;
+    width: 75px;
+    color: #fff;
+    border: none;
+}
+button: hover {
+
 }
